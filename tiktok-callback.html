@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Autorização concluída — Regime Brief</title>
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a href="index.html"><img src="logo.png" alt="Regime Brief" class="logo"></a></header>
+<main class="doc">
+  <h1 id="titulo">Autorização recebida</h1>
+  <p id="msg">Copie o código abaixo e entregue ao responsável pela automação. Ele vale por poucos minutos.</p>
+  <pre id="code" style="white-space:pre-wrap;word-break:break-all;background:#E6F6F8;padding:14px;border-radius:8px;font-size:14px"></pre>
+  <button id="copy" style="background:#00A6B6;color:#fff;border:0;padding:10px 18px;border-radius:6px;font-size:15px;cursor:pointer">Copiar código</button>
+</main>
+<footer><a href="privacidade.html">Política de Privacidade</a> · <a href="termos.html">Termos de Uso</a></footer>
+<script>
+  // Página de retorno do login (OAuth) do TikTok: só mostra o código recebido; nada é enviado a lugar nenhum.
+  const q = new URLSearchParams(location.search);
+  const code = q.get('code'), err = q.get('error') || q.get('error_description');
+  const box = document.getElementById('code');
+  if (code) box.textContent = code;
+  else { document.getElementById('titulo').textContent = 'Nenhum código recebido'; document.getElementById('msg').textContent = err ? 'O TikTok informou: ' + err : 'Abra esta página pelo link de autorização do TikTok.'; box.style.display = 'none'; document.getElementById('copy').style.display = 'none'; }
+  document.getElementById('copy').onclick = () => navigator.clipboard.writeText(code).then(() => { document.getElementById('copy').textContent = 'Copiado!'; });
+</script>
+</body>
+</html>
